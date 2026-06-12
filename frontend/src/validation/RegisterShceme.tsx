@@ -9,4 +9,20 @@ export const RegisterSchema = z.object({
     message: "Passwords don't match",
     path: ["confirmPassword"],
 });
+export const LoginSchema = z.object({
+    email: z.email().nonempty(),
+    password: z.string().min(6).max(20).nonempty(),
+});
+export const ArticleSchema = z.object({
+    title: z.string()
+        .min(5, "Назва має містити мінімум 5 символів")
+        .max(100, "Назва занадто довга")
+        .nonempty("Заголовок обов'язковий"),
+    content: z.string()
+        .min(20, "Текст статті має бути не менше 20 символів")
+        .nonempty("Текст статті обов'язковий"),
+});
+
+export type ArticleData = z.infer<typeof ArticleSchema>;
 export type RegisterData = z.infer<typeof RegisterSchema>;
+export type LoginData = z.infer<typeof LoginSchema>;
